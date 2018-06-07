@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 3070e0823b253dc4fa68c162acc010a2
+timeCreated: 1522658733
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - paddle: {instanceID: 0}
+  - bounceSfx: {fileID: 8300000, guid: e4468e89fdca09c4a917387415295314, type: 3}
+  - dieSfx: {fileID: 8300000, guid: ec43375ace1927a4399dda9f7638f780, type: 3}
+  - shootSfx: {fileID: 8300000, guid: 7abae9a31f0a5a14c81839df42f98220, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
