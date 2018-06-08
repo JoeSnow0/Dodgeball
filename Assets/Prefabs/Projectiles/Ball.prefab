@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 33987659135715050}
   - component: {fileID: 23132782974798960}
   - component: {fileID: 114933104608364496}
-  - component: {fileID: 50753966793341680}
   - component: {fileID: 58422289939176634}
   - component: {fileID: 96754287939089084}
   - component: {fileID: 82868063984517356}
+  - component: {fileID: 50222201326000550}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1225294378520124}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.4, z: 0}
+  m_LocalPosition: {x: -4.8609896, y: 0.62164855, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -87,7 +87,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1225294378520124}
   m_Mesh: {fileID: 4300002, guid: 356d11be35fbc074cb70ec16b9b46532, type: 3}
---- !u!50 &50753966793341680
+--- !u!50 &50222201326000550
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -101,12 +101,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 7
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &58422289939176634
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -306,10 +306,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4a8af5f7eb15f4182d66a691068f78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paddle: {fileID: 0}
-  paddleOffset: {x: 0, y: 0, z: 0}
   moveSpeed: 10
-  speedIncrease: 0
+  speedIncrease: 2
   bounceSfx: {fileID: 0}
   dieSfx: {fileID: 0}
   shootSfx: {fileID: 0}
+  rigidbody2D: {fileID: 0}
