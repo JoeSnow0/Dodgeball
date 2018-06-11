@@ -35,8 +35,9 @@ public class PlayerController : MonoBehaviour
 
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
-        rigidbodyPlayer.AddForce(movement * moveSpeed, ForceMode2D.Force);
+        rigidbodyPlayer.AddForce(movement * moveSpeed * Time.deltaTime, ForceMode2D.Impulse);
         Mathf.Clamp(rigidbodyPlayer.velocity.magnitude, 0, moveSpeed);
+        print(rigidbodyPlayer.velocity.magnitude);
         //Rotation
         var angH = Input.GetAxis("RotationHorizontal");
         var angV = Input.GetAxis("RotationVertical");
@@ -57,7 +58,8 @@ public class PlayerController : MonoBehaviour
 
     private void SpawnProjectile()
     {
+        Vector3 direction = gameObject.transform.position - projectileSpawn.position;
         Rigidbody2D newProjectile = Instantiate(bulletPrefab, projectileSpawn.position, projectileSpawn.rotation);
-        newProjectile.AddForce(projectileSpawn.position * bulletSpeed, ForceMode2D.Force);
+        newProjectile.AddForce((direction) * -bulletSpeed * moveSpeed, ForceMode2D.Force);
     }
 }
