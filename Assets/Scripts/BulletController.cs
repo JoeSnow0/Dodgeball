@@ -10,39 +10,38 @@ public class BulletController : MonoBehaviour {
     int owner;
     public float moveSpeed;
     public float speedIncrease;
+    int bounceCounter = 0;
 
     public AudioClip bounceSfx;
     public AudioClip dieSfx;
     public AudioClip shootSfx;
     private Vector2 m_Velocity;
     private AudioSource m_AudioSource;
-    public Rigidbody2D rigidbody2D;
+    public Rigidbody2D rigidbodyBullet;
     //private ConstantForce2D constantForce2D;
     //private float m_MoveSpeed;
 
     // Use this for initialization
     void Start()
     {
+        bounceCounter = 0;
         m_AudioSource = GetComponent<AudioSource>();
-        rigidbody2D = GetComponent<Rigidbody2D>();
-
-        rigidbody2D.velocity = transform.up * 0.2f;
-        Vector2 dir = rigidbody2D.velocity.normalized;
-        Debug.Log("Direction: " + dir);
+        rigidbodyBullet = GetComponent<Rigidbody2D>();
+        Vector2 dir = rigidbodyBullet.velocity.normalized;
+        //Debug.Log("Direction: " + dir);
         //SetPaddle ( true );
     }
 
     // Update is called once per frame
     void Update()
     {
-        //SetDirection
-        //transform.position += (Vector3)m_Velocity * Time.deltaTime;
     }
 
     Vector2 latestCollPos;
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+
         //AudioHelper.PlayOneShot(m_AudioSource, bounceSfx, 0.5f, 0.5f);
         if (coll.gameObject.CompareTag("Player"))
         {
@@ -50,6 +49,7 @@ public class BulletController : MonoBehaviour {
         }
         else
         {
+            bounceCounter++;
             //
             if (coll.contacts.Length > 0)
             {
@@ -65,15 +65,15 @@ public class BulletController : MonoBehaviour {
                 
                 //Debug.DrawLine(coll.contacts[0].point, Vector2.Reflect(dir, coll.contacts[0].normal), Color.blue, 5f);
 
-                Debug.Log("Direction: " + dir + " " + "Contact Point: " + coll.contacts[0].point + "Reflection Value: " + Vector2.Reflect(dir, coll.contacts[0].normal));
+                //Debug.Log("Direction: " + dir + " " + "Contact Point: " + coll.contacts[0].point + "Reflection Value: " + Vector2.Reflect(dir, coll.contacts[0].normal));
 
-                Debug.DrawRay(coll.contacts[0].point, Vector2.Reflect(dir, coll.contacts[0].normal), Color.cyan, 5f);
+                //Debug.DrawRay(coll.contacts[0].point, Vector2.Reflect(dir, coll.contacts[0].normal), Color.cyan, 5f);
             }
             else
             {
-                Vector2 dir = rigidbody2D.velocity.normalized;
-                Debug.LogError(coll.gameObject.name);
-                Debug.DrawRay(coll.contacts[0].point, Vector2.Reflect(dir, coll.contacts[0].normal), Color.red, 5f);
+                Vector2 dir = rigidbodyBullet.velocity.normalized;
+                //Debug.LogError(coll.gameObject.name);
+                //Debug.DrawRay(coll.contacts[0].point, Vector2.Reflect(dir, coll.contacts[0].normal), Color.red, 5f);
             }
 
             
@@ -82,8 +82,8 @@ public class BulletController : MonoBehaviour {
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(latestCollPos, Vector3.one / 2);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawCube(latestCollPos, Vector3.one / 2);
     }
 
     private void CollisionWithPlayer()
@@ -93,20 +93,20 @@ public class BulletController : MonoBehaviour {
 
     void Bounce(Vector2 normal)
     {
-        Vector2 dir = rigidbody2D.velocity.normalized;
+        Vector2 dir = rigidbodyBullet.velocity.normalized;
 
         if (Vector2.Dot(dir, normal) > 0)
         {
-            Debug.Log("Same normal direction");
+            //Debug.Log("Same normal direction");
             return;
         }
         SetDirection(Vector2.Reflect(dir, normal));
 
-        Debug.Log("direction: " + dir + " normal: " + normal + " Reflect: " + Vector2.Reflect(dir, normal));
+        //Debug.Log("direction: " + dir + " normal: " + normal + " Reflect: " + Vector2.Reflect(dir, normal));
     }
 
     public void SetDirection(Vector2 direction)
     {
-        rigidbody2D.AddForce(direction);
+        rigidbodyBullet.AddForce(direction);
     }
 }

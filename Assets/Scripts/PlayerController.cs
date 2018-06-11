@@ -5,9 +5,10 @@ public class PlayerController : MonoBehaviour
 {
 
    
-    public float speed;
+    public float moveSpeed;
+    public float bulletSpeed;
 
-    private Rigidbody2D rb;
+    private Rigidbody2D rigidbodyPlayer;
     public Transform playerModel;
     public Rigidbody2D bulletPrefab;
     [SerializeField] Transform projectileSpawn;
@@ -21,7 +22,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rigidbodyPlayer = GetComponent<Rigidbody2D>();
+        projectileSpawn.transform.position = new Vector2(0, bulletPrefab.GetComponent<CircleCollider2D>().radius * 2.5f);
     }
 
     void Update()
@@ -33,9 +35,8 @@ public class PlayerController : MonoBehaviour
 
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
-        rb.AddRelativeForce(movement * speed, ForceMode2D.Force);
-        Mathf.Clamp(rb.velocity.magnitude, 0, speed);
-        print(rb.velocity.magnitude);
+        rigidbodyPlayer.AddForce(movement * moveSpeed, ForceMode2D.Force);
+        Mathf.Clamp(rigidbodyPlayer.velocity.magnitude, 0, moveSpeed);
         //Rotation
         var angH = Input.GetAxis("RotationHorizontal");
         var angV = Input.GetAxis("RotationVertical");
@@ -56,6 +57,7 @@ public class PlayerController : MonoBehaviour
 
     private void SpawnProjectile()
     {
-        Rigidbody2D newProjectile = Instantiate(bulletPrefab, projectileSpawn.position, gameObject.transform.rotation);
+        Rigidbody2D newProjectile = Instantiate(bulletPrefab, projectileSpawn.position, projectileSpawn.rotation);
+        newProjectile.AddForce(projectileSpawn.position * bulletSpeed, ForceMode2D.Force);
     }
 }
