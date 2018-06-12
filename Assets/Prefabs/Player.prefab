@@ -82,7 +82,7 @@ Transform:
   m_GameObject: {fileID: 1970092270750910}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.1}
   m_Children:
   - {fileID: 4633209640995630}
   m_Father: {fileID: 4983314732318032}
@@ -142,7 +142,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1970092270750910}
-  m_Mesh: {fileID: 4300002, guid: 356d11be35fbc074cb70ec16b9b46532, type: 3}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!50 &50149337243161974
 Rigidbody2D:
   serializedVersion: 4
@@ -155,14 +155,14 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 0.5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!58 &58734642294932424
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -189,8 +189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b2b7804879745e4dbe0dd13d600fc9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
-  bulletSpeed: 50
+  moveSpeed: 5
+  bulletSpeed: 500
   playerModel: {fileID: 4736754612704854}
   bulletPrefab: {fileID: 50222201326000550, guid: 4f84b781cef2e1446865495813f32314,
     type: 2}

@@ -4,45 +4,32 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour {
 
-    public CameraHelper cameraHelper { get { return Camera.main.GetComponent<CameraHelper>(); } }
-    public SpriteRenderer spriteRenderer { get { return GetComponent<SpriteRenderer>(); } }
-    public ScreenShake screenShake { get { return Camera.main.GetComponent<ScreenShake>(); } }
-    int owner;
+    public BulletController myController;
+    public int ballNumber { get; set; }
     public float moveSpeed;
-    public float speedIncrease;
     int bounceCounter = 0;
-
-    public AudioClip bounceSfx;
-    public AudioClip dieSfx;
-    public AudioClip shootSfx;
     private Vector2 m_Velocity;
-    private AudioSource m_AudioSource;
     public Rigidbody2D rigidbodyBullet;
-    //private ConstantForce2D constantForce2D;
-    //private float m_MoveSpeed;
 
     // Use this for initialization
     void Start()
     {
+        myController = this;
         bounceCounter = 0;
-        m_AudioSource = GetComponent<AudioSource>();
         rigidbodyBullet = GetComponent<Rigidbody2D>();
         Vector2 dir = rigidbodyBullet.velocity.normalized;
-        //Debug.Log("Direction: " + dir);
-        //SetPaddle ( true );
     }
 
     // Update is called once per frame
     void Update()
     {
+        CheckSpeed();
     }
 
     Vector2 latestCollPos;
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-
-        //AudioHelper.PlayOneShot(m_AudioSource, bounceSfx, 0.5f, 0.5f);
         if (coll.gameObject.CompareTag("Player"))
         {
             CollisionWithPlayer();
@@ -56,24 +43,16 @@ public class BulletController : MonoBehaviour {
                 latestCollPos = coll.contacts[0].point;
                 Bounce(coll.contacts[0].normal);
 
-                Vector2 dir = Vector2.zero; //rigidbody2D.velocity.normalized;
+                Vector2 dir = Vector2.zero;
                 foreach (var c in coll.contacts)
                 {
                     dir += c.normal;
                 }
                 dir.Normalize();
-                
-                //Debug.DrawLine(coll.contacts[0].point, Vector2.Reflect(dir, coll.contacts[0].normal), Color.blue, 5f);
-
-                //Debug.Log("Direction: " + dir + " " + "Contact Point: " + coll.contacts[0].point + "Reflection Value: " + Vector2.Reflect(dir, coll.contacts[0].normal));
-
-                //Debug.DrawRay(coll.contacts[0].point, Vector2.Reflect(dir, coll.contacts[0].normal), Color.cyan, 5f);
             }
             else
             {
                 Vector2 dir = rigidbodyBullet.velocity.normalized;
-                //Debug.LogError(coll.gameObject.name);
-                //Debug.DrawRay(coll.contacts[0].point, Vector2.Reflect(dir, coll.contacts[0].normal), Color.red, 5f);
             }
 
             
@@ -82,12 +61,22 @@ public class BulletController : MonoBehaviour {
 
     private void OnDrawGizmos()
     {
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawCube(latestCollPos, Vector3.one / 2);
     }
-
+    private void CheckSpeed()
+    {
+        if (rigidbodyBullet.velocity.magnitude < 2)
+            BallDeath();
+    }
     private void CollisionWithPlayer()
     {
+        BallDeath();
+    }
+
+    private void BallDeath()
+    {
+        //Apply ammo
+
+        //Destroy object
         Destroy(gameObject);
     }
 
