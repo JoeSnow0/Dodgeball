@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = gameObject.transform.position - projectileSpawn.position;
         Rigidbody2D newProjectile = Instantiate(bulletPrefab, projectileSpawn.position, projectileSpawn.rotation);
         newProjectile.AddForce((direction) * -bulletSpeed * moveSpeed, ForceMode2D.Impulse);
+        newProjectile.AddTorque(5);
         newProjectile.gameObject.GetComponent<BulletController>().myController.ballNumber = playerNumber;
         playerAmmo--;
     }

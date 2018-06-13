@@ -74,13 +74,22 @@ public class BulletController : MonoBehaviour {
     {
         if (bounceCounter > bounceMax)
         {
+            Debug.Log("Bounces at death:" + bounceCounter);
             BallDeath();
         }
     }
+    float timer;
     private void CheckSpeed()
     {
         if (rigidbodyBullet.velocity.magnitude < 2)
-            BallDeath();
+        {
+            timer += Time.deltaTime;
+            Debug.Log("Speed at death:" + rigidbodyBullet.velocity.magnitude);
+            if (timer > 1)
+                BallDeath();
+        }
+        else
+            timer = 0;
     }
     //private void CollisionWithPlayer()
     //{
