@@ -4,10 +4,14 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
 
-   
+    public MeshRenderer renderer;
+    
+    private int m_maxHealth;
+    public int health;
     public float moveSpeed;
     public float bulletSpeed;
-    private int playerNumber { get; set; }
+    [Range (1, 4)]
+    public int playerNumber;
     [SerializeField] private int playerAmmo { get; set; }
 
     private Rigidbody2D rigidbodyPlayer;
@@ -28,6 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         playerAmmo = 1;
         rigidbodyPlayer = GetComponent<Rigidbody2D>();
+        renderer = GetComponent<MeshRenderer>();
         projectileSpawn.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + bulletPrefab.GetComponent<CircleCollider2D>().radius * 2f + ballSpawnOffset);
     }
 
@@ -79,6 +84,44 @@ public class PlayerController : MonoBehaviour
         rigidbodyPlayer.AddForce(movement * moveSpeed * Time.deltaTime, ForceMode2D.Impulse);
         Mathf.Clamp(rigidbodyPlayer.velocity.magnitude, 0, moveSpeed);
         print(rigidbodyPlayer.velocity.magnitude);
+
+    }
+    public void AssignColor(Color setColor)
+    {
+        renderer.material.color = setColor;
+    }
+
+    #region Health
+    public void AddHealth()
+    {
+        health++;
+        if (health > m_maxHealth)
+        {
+            health = m_maxHealth;
+        }
+    }
+
+    public void SubtractHealth()
+    {
+        health++;
+        if (health < 1)
+        {
+            KillPLayer();
+        }
+    }
+
+    public void SetHealth(int newHealthValue)
+    {
+        health = newHealthValue;
+        if (health > m_maxHealth)
+        {
+            health = m_maxHealth;
+        }
+    }
+    #endregion
+
+    private void KillPLayer()
+    {
 
     }
 }

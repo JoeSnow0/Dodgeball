@@ -8,6 +8,7 @@ public class BulletController : MonoBehaviour {
     public int ballNumber { get; set; }
     public float moveSpeed;
     int bounceCounter = 0;
+    const int bounceMax = 10;
     private Vector2 m_Velocity;
     public Rigidbody2D rigidbodyBullet;
 
@@ -24,6 +25,7 @@ public class BulletController : MonoBehaviour {
     void Update()
     {
         CheckSpeed();
+        CheckBounces();
     }
 
     Vector2 latestCollPos;
@@ -32,7 +34,13 @@ public class BulletController : MonoBehaviour {
     {
         if (coll.gameObject.CompareTag("Player"))
         {
-            CollisionWithPlayer();
+            PlayerController playerController = coll.gameObject.GetComponent<PlayerController>();
+            if (playerController.playerNumber != ballNumber)
+            {
+                playerController.SubtractHealth();
+            }
+            BallDeath();
+
         }
         else
         {
@@ -62,15 +70,23 @@ public class BulletController : MonoBehaviour {
     private void OnDrawGizmos()
     {
     }
+    private void CheckBounces()
+    {
+        if (bounceCounter > bounceMax)
+        {
+            BallDeath();
+        }
+    }
     private void CheckSpeed()
     {
         if (rigidbodyBullet.velocity.magnitude < 2)
             BallDeath();
     }
-    private void CollisionWithPlayer()
-    {
-        BallDeath();
-    }
+    //private void CollisionWithPlayer()
+    //{
+
+    //    BallDeath();
+    //}
 
     private void BallDeath()
     {
